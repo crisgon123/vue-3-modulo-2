@@ -3,6 +3,7 @@
     <h1>Registrar pelicula</h1>
     <form>
       <h3>Título y descripción de película</h3>
+      <h4>{{pelicula}} </h4>
       <label>Título</label>
       <input
         v-model="pelicula.titulo"
@@ -57,7 +58,7 @@
           v-model="pelicula.idiomas.espanol"
           class="field"
         />
-        <label>Inglés</label>
+        <label>Español</label>
       </div>
 
       <div>
@@ -66,7 +67,7 @@
           v-model="pelicula.idiomas.ingles"
           class="field"
         />
-        <label>Español</label>
+        <label>Inglés</label>
       </div>
 
       <button type="submit">Registrar</button>
