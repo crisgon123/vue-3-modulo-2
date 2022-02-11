@@ -3,7 +3,6 @@
     <h1>Registrar pelicula</h1>
     <form>
       <h3>Título y descripción de película</h3>
-      <h4>{{ pelicula }}</h4>
 
       <BaseInput v-model="pelicula.titulo" label="Título" type="text" />
 
@@ -21,42 +20,30 @@
 
       <h3>Película subtitulada</h3>
       <div>
-        <input
-          type="radio"
+        <BaseRadiobutton
           v-model="pelicula.subtitulada"
           :value="1"
+          label="Sí"
           name="subtitulada"
         />
-        <label>Si</label>
       </div>
 
       <div>
-        <input
-          type="radio"
+        <BaseRadiobutton
           v-model="pelicula.subtitulada"
           :value="0"
+          label="No"
           name="subtitulada"
         />
-        <label>No</label>
       </div>
-
+      <h4>{{ pelicula }}</h4>
       <h3>Idioma de subtítulos</h3>
       <div>
-        <input
-          type="checkbox"
-          v-model="pelicula.idiomas.espanol"
-          class="field"
-        />
-        <label>Español</label>
+        <BaseCheckbox v-model="pelicula.idiomas.espanol" label="Español" />
       </div>
 
       <div>
-        <input
-          type="checkbox"
-          v-model="pelicula.idiomas.ingles"
-          class="field"
-        />
-        <label>Inglés</label>
+        <BaseCheckbox v-model="pelicula.idiomas.ingles" label="Inglés" />
       </div>
 
       <button type="submit">Registrar</button>
