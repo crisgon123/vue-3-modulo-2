@@ -3,41 +3,30 @@
     <h1>Registrar pelicula</h1>
     <form>
       <h3>Título y descripción de película</h3>
-      <h4>{{pelicula}} </h4>
-      <label>Título</label>
-      <input
-        v-model="pelicula.titulo"
-        type="text"
-        placeholder="Título"
-        class="field"
-      >
+      <h4>{{ pelicula }}</h4>
 
-      <label>Descripcion</label>
-      <input
+      <BaseInput v-model="pelicula.titulo" label="Título" type="text" />
+
+      <BaseInput
         v-model="pelicula.descripcion"
+        label="Descripción"
         type="text"
-        placeholder="Descripción"
-        class="field"
       />
 
-      <label>Elegir categoría</label>
-      <select v-model="pelicula.categoria">
-        <option
-          v-for="categoria in categorias"
-          :value="categoria"
-          :key="categoria"
-          :selected="categoria === pelicula.categoria"
-        >{{ categoria }}</option>
-      </select>
+      <BaseSelect
+        :opciones="categorias"
+        v-model="pelicula.categoria"
+        label="Elegir categoría"
+      />
 
-     <h3>Película subtitulada</h3>
+      <h3>Película subtitulada</h3>
       <div>
         <input
-            type="radio"
-            v-model="pelicula.subtitulada"
-            :value="1"
-            name="subtitulada"
-          />
+          type="radio"
+          v-model="pelicula.subtitulada"
+          :value="1"
+          name="subtitulada"
+        />
         <label>Si</label>
       </div>
 
@@ -72,32 +61,25 @@
 
       <button type="submit">Registrar</button>
     </form>
-
   </div>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      categorias: [
-        'terror',
-        'comedia',
-        'animada',
-        'thriller',
-        'acción'
-      ],
+      categorias: ["terror", "comedia", "animada", "thriller", "acción"],
       pelicula: {
-        categoria: '',
-        titulo: '',
-        descripcion: '',
+        categoria: "",
+        titulo: "",
+        descripcion: "",
         subtitulada: 0,
         idiomas: {
           espanol: false,
-          ingles: false
-        }
-      }
-    }
-  }
-}
+          ingles: false,
+        },
+      },
+    };
+  },
+};
 </script>
