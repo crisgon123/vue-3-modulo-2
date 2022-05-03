@@ -19,23 +19,12 @@
       />
 
       <h3>Película subtitulada</h3>
-      <div>
-        <BaseRadiobutton
-          v-model="pelicula.subtitulada"
-          :value="1"
-          label="Sí"
-          name="subtitulada"
-        />
-      </div>
+      <BaseRadioGroup
+        v-model="pelicula.subtitulada"
+        name="subtitulada"
+        :opciones="opcionesIdioma"
+      />
 
-      <div>
-        <BaseRadiobutton
-          v-model="pelicula.subtitulada"
-          :value="0"
-          label="No"
-          name="subtitulada"
-        />
-      </div>
       <h4>{{ pelicula }}</h4>
       <h3>Idioma de subtítulos</h3>
       <div>
@@ -66,6 +55,16 @@ export default {
           ingles: false,
         },
       },
+      opcionesIdioma: [
+        {
+          label: "Si",
+          value: 1,
+        },
+        {
+          label: "No",
+          value: 0,
+        },
+      ],
     };
   },
 };
