@@ -2,38 +2,47 @@
   <div>
     <h1>Registrar pelicula</h1>
     <form @submit.prevent="enviarFormulario">
-      <h3>Título y descripción de película</h3>
+      <fieldset>
+        <legend>Información de película</legend>
 
-      <BaseInput v-model="pelicula.titulo" label="Título" type="text" />
+        <BaseInput
+          v-model="pelicula.titulo"
+          label="Título"
+          type="text"
+          error="Este campo tiene un error"
+        />
 
-      <BaseInput
-        v-model="pelicula.descripcion"
-        label="Descripción"
-        type="text"
-      />
+        <BaseInput
+          v-model="pelicula.descripcion"
+          label="Descripción"
+          type="text"
+        />
 
-      <BaseSelect
-        :opciones="categorias"
-        v-model="pelicula.categoria"
-        label="Elegir categoría"
-      />
+        <BaseSelect
+          :opciones="categorias"
+          v-model="pelicula.categoria"
+          label="Elegir categoría"
+        />
+      </fieldset>
 
-      <h3>Película subtitulada</h3>
-      <BaseRadioGroup
-        v-model="pelicula.subtitulada"
-        name="subtitulada"
-        :opciones="opcionesIdioma"
-      />
+      <fieldset>
+        <legend>Subtítulos</legend>
+        <h4>Disponibles</h4>
+        <BaseRadioGroup
+          v-model="pelicula.subtitulada"
+          name="subtitulada"
+          :opciones="opcionesIdioma"
+        />
 
-      <h4>{{ pelicula }}</h4>
-      <h3>Idioma de subtítulos</h3>
-      <div>
-        <BaseCheckbox v-model="pelicula.idiomas.espanol" label="Español" />
-      </div>
+        <h4>Idioma</h4>
+        <div>
+          <BaseCheckbox v-model="pelicula.idiomas.espanol" label="Español" />
+        </div>
 
-      <div>
-        <BaseCheckbox v-model="pelicula.idiomas.ingles" label="Inglés" />
-      </div>
+        <div>
+          <BaseCheckbox v-model="pelicula.idiomas.ingles" label="Inglés" />
+        </div>
+      </fieldset>
 
       <button type="submit">Registrar</button>
     </form>
@@ -90,3 +99,20 @@ export default {
   },
 };
 </script>
+
+<style>
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  font-size: 27px;
+  font-weight: 700;
+  margin-top: 20px;
+}
+body {
+  font-family: "Open Sans";
+}
+</style>
