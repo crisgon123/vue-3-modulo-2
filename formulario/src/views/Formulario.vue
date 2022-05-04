@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Registrar pelicula</h1>
-    <form>
+    <form @submit.prevent="enviarFormulario">
       <h3>Título y descripción de película</h3>
 
       <BaseInput v-model="pelicula.titulo" label="Título" type="text" />
@@ -42,6 +42,27 @@
 
 <script>
 export default {
+  methods: {
+    enviarFormulario() {
+      fetch(
+        "https://formulario-28ec7-default-rtdb.firebaseio.com/peliculas.json",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(this.pelicula),
+        }
+      );
+
+      this.pelicula.categoria = "";
+      this.pelicula.titulo = "";
+      this.pelicula.descripcion = "";
+      this.pelicula.subtitulada = 0;
+      this.pelicula.idiomas.espanol = false;
+      this.pelicula.idiomas.ingles = false;
+    },
+  },
   data() {
     return {
       categorias: ["terror", "comedia", "animada", "thriller", "acción"],
