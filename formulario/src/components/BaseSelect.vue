@@ -19,9 +19,13 @@
       {{ opcion }}
     </option>
   </select>
+  <p v-if="error" class="errorMessage" :id="`${uuid}-error`">
+    {{ error }}
+  </p>
 </template>
 
 <script>
+import UniqueID from "../UniqueID";
 export default {
   props: {
     label: {
@@ -35,6 +39,10 @@ export default {
     opciones: {
       type: Array,
       required: true,
+    },
+    error: {
+      type: String,
+      default: "",
     },
   },
 };

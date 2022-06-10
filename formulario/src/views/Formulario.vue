@@ -9,19 +9,23 @@
           v-model="pelicula.titulo"
           label="Título"
           type="text"
-          error="Este campo tiene un error"
+          :error="errores.titulo"
+          @blur="validarFormato($event)"
         />
 
         <BaseInput
           v-model="pelicula.descripcion"
           label="Descripción"
           type="text"
+          :error="errores.descripcion"
+          @input="validarLongitud"
         />
 
         <BaseSelect
           :opciones="categorias"
           v-model="pelicula.categoria"
           label="Elegir categoría"
+          :error="errores.categoria"
         />
       </fieldset>
 
@@ -52,29 +56,76 @@
 <script>
 export default {
   methods: {
-    enviarFormulario() {
-      fetch(
-        "https://formulario-28ec7-default-rtdb.firebaseio.com/peliculas.json",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(this.pelicula),
-        }
-      );
+    validarFormato(event) {
+      const re = /\S+\ \([0-9]{4}\)/;
+      const valido = re.test(event.target.value);
+      !valido
+        ? (this.errores.titulo = "Debe llevar el año. Ej. El aro (2003)")
+        : (this.errores.titulo = null);
+    },
+    validarLongitud() {
+      setTimeout(() => {
+        if (this.pelicula.descripcion.length == 0)
+          this.errores.descripcion = "La descripción no puede estar en blanco";
+        else if (this.pelicula.descripcion.length < 40)
+          this.errores.descripcion = null;
+        else this.errores.descripcion = "No puede tener más de 40 caracteres";
+      }, 20);
+    },
+    validarFormulario() {
+      // if (
+      //   this.pelicula.categoria === "" ||
+      //   this.pelicula.titulo === "" ||
+      //   this.pelicula.descripcion === ""
+      // )
+      //   return false;
+      // else return true;
+      const errores = {};
+      if (!this.pelicula.categoria)
+        errores.categoria = "Debes elegir una categoría";
+      if (!this.pelicula.titulo)
+        errores.titulo = "El título no puede estar en blanco";
+      if (!this.pelicula.descripcion)
+        errores.descripcion = "La descripción no puede estar en blanco";
+      this.errores = { ...this.errores, ...errores };
 
-      this.pelicula.categoria = "";
-      this.pelicula.titulo = "";
-      this.pelicula.descripcion = "";
-      this.pelicula.subtitulada = 0;
-      this.pelicula.idiomas.espanol = false;
-      this.pelicula.idiomas.ingles = false;
+      const esValido = Object.values(this.errores).every(
+        (x) => x === null || x === ""
+      );
+      return esValido;
+    },
+    enviarFormulario() {
+      if (this.validarFormulario()) {
+        fetch(
+          "https://formulario-28ec7-default-rtdb.firebaseio.com/peliculas.json",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(this.pelicula),
+          }
+        );
+
+        this.pelicula.categoria = "";
+        this.pelicula.titulo = "";
+        this.pelicula.descripcion = "";
+        this.pelicula.subtitulada = 0;
+        this.pelicula.idiomas.espanol = false;
+        this.pelicula.idiomas.ingles = false;
+      } else {
+        console.log("el formulario es inválido");
+      }
     },
   },
   data() {
     return {
       categorias: ["terror", "comedia", "animada", "thriller", "acción"],
+      errores: {
+        categoria: null,
+        titulo: null,
+        descripcion: null,
+      },
       pelicula: {
         categoria: "",
         titulo: "",
