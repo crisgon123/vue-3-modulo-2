@@ -27,6 +27,11 @@
 <script>
 import UniqueID from "../UniqueID";
 export default {
+  data() {
+    return {
+      uuid: UniqueID(),
+    };
+  },
   props: {
     label: {
       type: String,

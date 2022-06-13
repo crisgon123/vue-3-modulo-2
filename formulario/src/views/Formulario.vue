@@ -1,60 +1,68 @@
 <template>
-  <div>
-    <h1>Registrar pelicula</h1>
-    <form @submit.prevent="enviarFormulario">
-      <fieldset>
-        <legend>Información de película</legend>
+  <div class="row">
+    <div class="column registro">
+      <h1>Registrar pelicula</h1>
+      <form @submit.prevent="enviarFormulario">
+        <fieldset>
+          <legend>Información de película</legend>
 
-        <BaseInput
-          v-model="pelicula.titulo"
-          label="Título"
-          type="text"
-          :error="errores.titulo"
-          @blur="validarFormato($event)"
-        />
+          <BaseInput
+            v-model="pelicula.titulo"
+            label="Título"
+            type="text"
+            :error="errores.titulo"
+            @blur="validarFormato($event)"
+          />
 
-        <BaseInput
-          v-model="pelicula.descripcion"
-          label="Descripción"
-          type="text"
-          :error="errores.descripcion"
-          @input="validarLongitud"
-        />
+          <BaseInput
+            v-model="pelicula.descripcion"
+            label="Descripción"
+            type="text"
+            :error="errores.descripcion"
+            @input="validarLongitud"
+          />
 
-        <BaseSelect
-          :opciones="categorias"
-          v-model="pelicula.categoria"
-          label="Elegir categoría"
-          :error="errores.categoria"
-        />
-      </fieldset>
+          <BaseSelect
+            :opciones="categorias"
+            v-model="pelicula.categoria"
+            label="Elegir categoría"
+            :error="errores.categoria"
+          />
+        </fieldset>
 
-      <fieldset>
-        <legend>Subtítulos</legend>
-        <h4>Disponibles</h4>
-        <BaseRadioGroup
-          v-model="pelicula.subtitulada"
-          name="subtitulada"
-          :opciones="opcionesIdioma"
-        />
+        <fieldset>
+          <legend>Subtítulos</legend>
+          <h4>Disponibles</h4>
+          <BaseRadioGroup
+            v-model="pelicula.subtitulada"
+            name="subtitulada"
+            :opciones="opcionesIdioma"
+          />
 
-        <h4>Idioma</h4>
-        <div>
-          <BaseCheckbox v-model="pelicula.idiomas.espanol" label="Español" />
-        </div>
+          <h4>Idioma</h4>
+          <div>
+            <BaseCheckbox v-model="pelicula.idiomas.espanol" label="Español" />
+          </div>
 
-        <div>
-          <BaseCheckbox v-model="pelicula.idiomas.ingles" label="Inglés" />
-        </div>
-      </fieldset>
+          <div>
+            <BaseCheckbox v-model="pelicula.idiomas.ingles" label="Inglés" />
+          </div>
+        </fieldset>
 
-      <button type="submit">Registrar</button>
-    </form>
+        <button type="submit">Registrar</button>
+      </form>
+    </div>
+
+    <div class="column lista">
+      <ListaPeliculas :pelicula="peliculaJson" />
+    </div>
   </div>
 </template>
 
 <script>
+import ListaPeliculas from "../components/ListaPeliculas.vue";
 export default {
+  components: { ListaPeliculas },
   methods: {
     validarFormato(event) {
       const re = /\S+\ \([0-9]{4}\)/;
@@ -165,5 +173,35 @@ legend {
 }
 body {
   font-family: "Open Sans";
+}
+
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.column {
+  float: left;
+}
+
+.registro {
+  width: 45%;
+}
+
+.lista {
+  width: 55%;
+}
+
+@media screen and (max-width: 1000px) {
+  .column {
+    width: 100%;
+  }
+  .formulario {
+    width: 80%;
+  }
+  .lista {
+    width: 100vw;
+  }
 }
 </style>
