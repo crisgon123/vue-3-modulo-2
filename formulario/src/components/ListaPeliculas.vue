@@ -1,6 +1,6 @@
 <template>
-  <div class="ultimas-peliculas">
-    <h3 class="titulo">Últimos registros</h3>
+  <div class="lista-peliculas">
+    <h3 class="titulo">Últimas películas</h3>
     <div class="pelicula">
       <h4>Memento (2000)</h4>
       <p class="categoria categoria-thriller">THRILLER</p>
@@ -21,7 +21,7 @@ export default {};
 </script>
 
 <style scoped>
-.ultimas-peliculas {
+.lista-peliculas {
   margin: 4rem 2rem;
 }
 .titulo {
