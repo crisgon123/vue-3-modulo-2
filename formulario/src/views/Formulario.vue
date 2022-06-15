@@ -54,7 +54,7 @@
     </div>
 
     <div class="column lista">
-      <ListaPeliculas :pelicula="peliculaJson" />
+      <ListaPeliculas />
     </div>
   </div>
 </template>
