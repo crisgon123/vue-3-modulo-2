@@ -54,16 +54,35 @@
     </div>
 
     <div class="column lista">
-      <ListaPeliculas />
+      <ListaPeliculas
+        :peliculas="ultimasPeliculas"
+        titulo="Últimas películas"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import ListaPeliculas from "../components/ListaPeliculas.vue";
+import axios from "axios";
 export default {
   components: { ListaPeliculas },
+  created() {
+    this.obtenerUltimasPeliculas();
+  },
   methods: {
+    obtenerUltimasPeliculas() {
+      axios
+        .get(
+          "https://formulario-28ec7-default-rtdb.firebaseio.com/peliculas.json"
+        )
+        .then(({ data }) => {
+          this.ultimasPeliculas = data;
+        })
+        .catch((err) => {
+          console.log("Error: ", err);
+        });
+    },
     validarFormato(event) {
       const re = /\S+\ \([0-9]{4}\)/;
       const valido = re.test(event.target.value);
@@ -128,7 +147,8 @@ export default {
   },
   data() {
     return {
-      categorias: ["terror", "comedia", "animada", "thriller", "acción"],
+      ultimasPeliculas: null,
+      categorias: ["terror", "comedia", "animada", "thriller", "accion"],
       errores: {
         categoria: null,
         titulo: null,

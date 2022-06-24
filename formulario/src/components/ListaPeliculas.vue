@@ -1,23 +1,34 @@
 <template>
   <div class="lista-peliculas">
-    <h3 class="titulo">Últimas películas</h3>
-    <div class="pelicula">
-      <h4>Memento (2000)</h4>
-      <p class="categoria categoria-thriller">THRILLER</p>
+    <h3 class="titulo">{{ titulo }}</h3>
+    <div v-for="pelicula in peliculas" :key="pelicula.titulo" class="pelicula">
+      <h4>{{ pelicula.titulo }}</h4>
+      <p
+        class="categoria"
+        :class="{ [`categoria-${pelicula.categoria}`]: true }"
+      >
+        {{ pelicula.categoria.toUpperCase() }}
+      </p>
 
-      <p class="descripcion">Película con desenlace inesperado</p>
+      <p class="descripcion">{{ pelicula.descripcion }}</p>
       <p class="subtitulos">
-        <span>Subtítulos: </span>
-        <span><i>Sin subtitulos</i></span>
-        <span><i>Español </i></span>
-        <span><i>Inglés</i></span>
+        <span v-if="pelicula.subtitulada">Subtítulos: </span>
+        <span v-else><i>Sin subtitulos</i></span>
+        <span v-if="pelicula.subtitulada && pelicula.idiomas.espanol"
+          ><i>Español </i></span
+        >
+        <span v-if="pelicula.subtitulada && pelicula.idiomas.ingles"
+          ><i>Inglés</i></span
+        >
       </p>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["peliculas", "titulo"],
+};
 </script>
 
 <style scoped>
